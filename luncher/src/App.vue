@@ -1,60 +1,57 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
+    <div class="row">
+     <div class="col-md-6">
+    <img class="img-fluid" src="./assets/lunch-big.jpg">
+    </div>
+     <div class="col-md-6">
+    <h2>Today's lunch {{ today }}</h2>
+    <todays-lunch
+    :lunch="lunches[0]"
+    @liked="likedIt"
+    @hated="hatedIt"
+    />
+    </div>
+    </div>
+    <h2>This week's menu</h2>
+    <ol>
+      <lunch-item
+        v-for="lunch in lunches"
+        :lunch="lunch"
+        :key="lunch.id"
+      />
+    </ol>
   </div>
 </template>
 
 <script>
+import LunchItem from './lunch-item.vue'
+import TodaysLunch from './todays-lunch.vue'
+
 export default {
-  name: 'app',
-  data () {
+  name: "app",
+  data() {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      today: new Date().toLocaleDateString("nb-NO"),
+      lunches: [{ id: 1, text: "pasta", day: "monday" }]
+    };
+  },
+  components:{
+    'lunch-item': LunchItem,
+    'todays-lunch': TodaysLunch
+  },
+
+  methods: {
+    likedIt(lunchId){
+      console.log("liked it: " + lunchId);
+    },
+    hatedIt(lunchId){
+      console.log("hated it: " + lunchId);
     }
   }
-}
+};
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 
-h1, h2 {
-  font-weight: normal;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
-}
 </style>
