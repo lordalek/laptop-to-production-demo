@@ -33,7 +33,7 @@ export default {
   data() {
     return {
       today: new Date().toLocaleDateString("nb-NO"),
-      lunches: [{ id: 1, text: "pasta", day: "monday" }]
+      lunches: [{ id: 1, text: "pasta",description:"Pasta is a staple food of traditional Italian cuisine, with the first reference dating to 1154 in Sicily.", allergens: ['gluten'], day: "monday" }]
     };
   },
   components:{
